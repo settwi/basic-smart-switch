@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>switch schedule</title>
+        <script src="{{url_for('static', filename='scheduler.js')}}"></script>
+        <link rel="stylesheet" href="{{url_for('static', filename='main-style.css')}}">
+    </head>
+    <body onload="buildSchedule({{schedule}});">
+        <a href="/"><h2> Homepage </h2></a>
+        <div id="head">
+            <h1> change outlet schedule </h1>
+            <button class="left-button" type="button" onclick="submitSchedule();"> submit change </button>
+            <button class="normal-button" type="button" onclick="resetSchedule();"> reset </button>
+
+        </div>
+        <div id="schedule-holster"></div>
+    </body> 
+</html>
