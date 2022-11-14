@@ -14,7 +14,7 @@ const NUM_DAYS = DAYS.length;
 const BAD_COLOR = "#ffb0ab";
 const GOOD_COLOR = "#73966f";
 
-let mouseIsDown = false;
+let isPressingDown = false;
 
 var scheduleData = [...Array(NUM_ROWS)].map(e => Array(NUM_DAYS));
 
@@ -44,18 +44,18 @@ function submitSchedule() {
 function buildSchedule(saved) {
     scheduleData = saved.schedule || scheduleData
     const sch = document.getElementById("schedule-holster");
-    sch.addEventListener('mouseleave', () => { mouseIsDown = false; });
+    sch.addEventListener('mouseleave', () => { isPressingDown = false; });
     const tab = buildScheduleTable();
     sch.appendChild(tab);
 }
 
 function wentDown(evt) {
-    mouseIsDown = true;
+    isPressingDown = true;
     recolor(evt);
 }
 
 function wentUp(evt) {
-    mouseIsDown = false;
+    isPressingDown = false;
     recolor(evt);
 }
 
@@ -113,7 +113,7 @@ function handleTouch(evt) {
     if (evt.type == "touchstart") {
         lastColor = elt.bgColor;
     }
-    if (mouseIsDown) {
+    if (isPressingDown) {
         const flipColor = (lastColor == BAD_COLOR) ? GOOD_COLOR : BAD_COLOR;
         if (elt.classList.contains(EDITABLE_BLOCK)) elt.bgColor = flipColor;
     }
@@ -123,7 +123,7 @@ function handleMouse(evt) {
     if (evt.type == "mousedown") {
         lastColor = evt.target.bgColor;
     }
-    if (mouseIsDown) {
+    if (isPressingDown) {
         const flipColor = (lastColor == BAD_COLOR) ? GOOD_COLOR : BAD_COLOR;
         evt.target.bgColor = flipColor;
     }
