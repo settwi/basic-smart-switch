@@ -29,7 +29,7 @@ function submitSchedule() {
         idx++;
     });
 
-    const data = {"schedule": scheduleData};
+    const data = {"schedule": scheduleData, "minutes_per_element": MINUTE_INC, "days": DAYS};
     fetch(window.location.pathname, {
         method: "POST",
         headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
