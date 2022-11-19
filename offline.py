@@ -1,4 +1,5 @@
 import collections
+import copy
 import logging
 import datetime
 import json
@@ -8,12 +9,15 @@ import traceback as tb
 
 SECONDS_IN_DAY = 60 * 60 * 24
 SCHED_FN = 'schedule.txt'
+LOG_FN = 'offline.log'
 last_power_state = 0
 TimeSwitch = collections.namedtuple('TimeSwitch', ('time', 'state'))
 
 
 def main():
-    sched = read_schedule(SCHED_FN)
+    logging.basicConfig(filename=LOG_FN, level=logging.DEBUG)
+    logging.info('start log')
+    sched = read_schedule()
     last_mod = os.stat(SCHED_FN)
     loop(sched, last_mod)
 
@@ -25,13 +29,14 @@ def time_now():
 def loop(sched: dict[str, list[int]], last_mod: float):
     global last_power_state
 
+    orig_sch = copy.deepcopy(sched)
     new_state = last_power_state 
     while True:
         mod = os.stat(SCHED_FN)
         if last_mod != mod:
             last_mod = mod
-            sched = read_schedule(SCHED_FN)
-        # different func for testing.
+            sched = read_schedule()
+        # different func to permit testing.
         now = time_now()
         day = now.strftime('%A')[:3]
         now_sec = (now - now.replace(hour=0, minute=0, second=0, microsecond=0)).total_seconds()
@@ -40,15 +45,17 @@ def loop(sched: dict[str, list[int]], last_mod: float):
                 next_flip = sched[day].pop(0)
                 new_state = next_flip.state
         except IndexError:
+            sched = copy.deepcopy(orig_sch)
+            logging.error("hit the end of a schedule; resetting")
             logging.error(tb.format_exec())
 
         flip_switch(new_state)
-        last_power_state = new_state
         print('lights are', 'on' if new_state else 'off')
         time.sleep(1)
 
 
-def read_schedule(fn) -> dict[str, list[int]]:
+def read_schedule() -> dict[str, list[int]]:
+    fn = SCHED_FN
     with open(fn, 'r') as f:
         sch_dat = json.loads(f.read())
 
