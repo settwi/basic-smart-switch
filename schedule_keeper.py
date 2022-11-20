@@ -103,6 +103,9 @@ class ScheduleKeeper:
         return False
 
     def update_override_state(self):
+        if self.override_queue is None:
+            return
+
         state = None
         while not self.override_queue.empty():
             state = self.override_queue.get()
