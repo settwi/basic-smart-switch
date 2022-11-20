@@ -10,10 +10,10 @@ import schedule_keeper as sk
 
 app = flask.Flask(__name__)
 q = queue.Queue()
-
+log_level logging.ERROR
 
 def main():
-    common.init_logging(log_level=logging.DEBUG, log_fn='server-interface.log')
+    common.init_logging(log_level=log_level, log_fn='server-interface.log')
 
     t = threading.Thread(target=offline_logic)
     t.start()
