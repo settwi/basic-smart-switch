@@ -70,7 +70,7 @@ function buildScheduleTable() {
         td.classList.add(SCHEDULE_BLOCK_CLASS);
     });
     const td = row.insertCell();
-    td.innerHTML = "<b>Time</b>";
+    td.innerHTML = "<b>Time Range</b>";
     td.classList.add(SCHEDULE_BLOCK_CLASS);
 
     for (let i = 0; i < NUM_ROWS; ++i) {
@@ -91,8 +91,15 @@ function buildScheduleTable() {
         const total_minutes = i * MINUTE_INC;
         const hr = Math.floor(i / MINUTE_CHUNKS_PER_HR);
         const min = total_minutes % 60;
-        const time_cell = tr.insertCell();
-        time_cell.innerHTML = `${hr.toString().padStart(2, "0")}:${min.toString().padStart(2, "0")}`;
+
+        const nextMin = (min + MINUTE_INC) % 60;
+        const nextHr = (hr + (nextMin === 0? 1 : 0)) % 24;
+
+        const timeCell = tr.insertCell();
+
+        let tfmt = function(h, m) { return `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}`; }
+        timeCell.innerHTML = tfmt(hr, min);
+        timeCell.innerHTML += ' - ' + tfmt(nextHr, nextMin);
     }
     return tab;
 }
