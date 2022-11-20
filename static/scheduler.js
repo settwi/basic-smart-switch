@@ -41,6 +41,19 @@ function submitSchedule() {
     });
 }
 
+function postOverride(url, stateNum) {
+    const data = {state: stateNum}
+    fetch(url, {
+        method: "POST",
+        headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    }).then(res => {
+        if (res.ok && res.redirected) {
+            window.location.href = res.url;
+        }
+    });
+}
+
 function buildSchedule(saved) {
     scheduleData = saved.schedule || scheduleData
     const sch = document.getElementById("schedule-holster");

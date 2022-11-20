@@ -7,12 +7,15 @@
         <link rel="stylesheet" href="{{url_for('static', filename='main-style.css')}}">
     </head>
     <body onload="buildSchedule({{schedule}});">
-        <a href="/"><h2> Homepage </h2></a>
+        <a href="/"><h1> Homepage </h1></a>
         <div id="head">
-            <h1> change outlet schedule </h1>
-            <button class="left-button" type="button" onclick="submitSchedule();"> submit change </button>
-            <button class="normal-button" type="button" onclick="resetSchedule();"> reset </button>
+            <!--h1> change outlet schedule </h1-->
+            <button class="chunky action on" type="button" onclick="postOverride('{{ url_for('override') }}', 1);">on</button>
+            <button class="chunky action off" type="button" onclick="postOverride('{{ url_for('override') }}', 0);">override off</button>
+            <button class="chunky action reset" type="button" onclick="postOverride('{{ url_for('override') }}', -1);">override reset</button>
 
+            <button class="chunky left-button" type="button" onclick="submitSchedule();"> submit change </button>
+            <button class="chunky normal-button" type="button" onclick="resetSchedule();"> reset </button>
         </div>
         <div id="schedule-holster"></div>
     </body> 
