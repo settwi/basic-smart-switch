@@ -10,7 +10,7 @@
         <a href="/"><h1> Homepage </h1></a>
         <div id="head">
             <!--h1> change outlet schedule </h1-->
-            <button class="chunky action on" type="button" onclick="postOverride('{{ url_for('override') }}', 1);">on</button>
+            <button class="chunky action on" type="button" onclick="postOverride('{{ url_for('override') }}', 1);">override on</button>
             <button class="chunky action off" type="button" onclick="postOverride('{{ url_for('override') }}', 0);">override off</button>
             <button class="chunky action reset" type="button" onclick="postOverride('{{ url_for('override') }}', -1);">override reset</button>
 

@@ -1,0 +1,4 @@
+#!/bin/bash -l
+
+cd /home/ubuntu/basic-smart-switch
+python3.11 app.py

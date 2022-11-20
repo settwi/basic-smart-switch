@@ -1,4 +1,3 @@
-import flask
 import json
 import logging
 import os
@@ -6,11 +5,12 @@ import queue
 import threading
 
 import common
+import flask
 import schedule_keeper as sk
 
 app = flask.Flask(__name__)
 q = queue.Queue()
-log_level logging.ERROR
+log_level = logging.WARN
 
 def main():
     common.init_logging(log_level=log_level, log_fn='server-interface.log')
