@@ -1,0 +1,5 @@
+Make the enclosure STL file on MacOS
+
+source $HOME/miniforge/bin/activate
+
+killall Preview ; pyflakes switch_box.py && python switch_box.py && open exported-enclosure.stl
